@@ -27,6 +27,9 @@ public class AuthService : IAuthService
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             return ApiResponse<AuthResponse>.FailResult("Invalid email or password.");
 
+        if (user.Role != "Admin")
+            return ApiResponse<AuthResponse>.FailResult("Access denied. Only administrators can log in.");
+
         var accessToken = _jwtTokenGenerator.GenerateAccessToken(user);
         var refreshToken = _jwtTokenGenerator.GenerateRefreshToken();
 

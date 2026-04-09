@@ -25,21 +25,61 @@ If the database doesn't exist, ensure you run the `Update-Database` command in t
 ### 3. Run the Project
 1. Set `StudentManagement` as the StartUp project.
 2. Press `F5` or run `dotnet run` in the terminal.
-3. Swagger will automatically open at `https://localhost:[port]/swagger`.
+3. Swagger will automatically open at `https://localhost:7107/swagger`.
 
 ---
 
-## 🏗 Project Architecture & References
+## 🎨 Frontend Setup (React)
 
-This solution follows **Clean Architecture** principles to ensure high maintainability and testability.
+The frontend is a modern React application located in the `student-management-ui` folder.
 
-| Project | Role | Dependencies |
-| :--- | :--- | :--- |
-| **StudentManagement** | **Web API Layer**: Controllers, Middleware, Configuration. | Application, Infrastructure, Persistence |
-| **StudentManagement.Application** | **Core Logic**: Interfaces, Services, DTOs, Validators. | Domain |
-| **StudentManagement.Infrastructure** | **External Services**: JWT Generation, Logging. | Application |
-| **StudentManagement.Persistence** | **Data Access**: DbContext, Repositories, Unit of Work. | Domain, Application |
-| **StudentManagement.Domain** | **Core Entities**: POCO classes, Base entities. | *None* |
+### 1. Installation
+Open a terminal in the frontend directory and install the dependencies:
+```powershell
+cd student-management-ui
+npm install
+```
+
+### 2. Running Locally
+Start the development server:
+```powershell
+npm run dev
+```
+The app will be available at `http://localhost:5173`.
+
+---
+
+## 🏗 Project Architecture & Security
+
+### Project References
+- **StudentManagement (API)**: Entry point, Controllers, and Middleware.
+- **Application**: Business Logic, Interfaces, and DTOs.
+- **Domain**: Core Entities.
+- **Infrastructure**: JWT Generation and Logging.
+- **Persistence**: Database context and Repository implementations.
+
+### Security & Access Control
+- **Authentication**: JWT Bearer tokens are required for the Students API.
+- **Authorization**: **Only users with the "Admin" role can log in** and access student endpoints.
+- **CORS**: The API is configured to allow requests from `http://localhost:5173`.
+
+---
+
+## 🔄 Request Flow (A to Z)
+1. **Middleware**: Validates JWT and checks for Admin role.
+2. **Controller**: Receives request and calls Service.
+3. **Service**: Processes business logic and maps Entities to DTOs.
+4. **Repository**: Fetches/Saves data in SQL Server via EF Core.
+
+
+---
+
+## 🔐 Security Note & Access Control
+
+- **Authentication**: JWT Bearer tokens are required for all Student endpoints.
+- **Authorization**: **Only users with the "Admin" role can log in** and access the dashboard.
+- **CORS**: The API allows requests from `http://localhost:5173`.
+- **Registration**: Open to all, but only "Admin" registered users can access the system.
 
 ---
 
@@ -50,43 +90,3 @@ This solution follows **Clean Architecture** principles to ensure high maintaina
 3.  **Unit of Work**: Ensures atomsity by wrapping multiple repository operations into a single transaction.
 4.  **Global Exception Handling**: A centralized middleware to catch all errors and return formatted JSON.
 5.  **Clean Architecture**: Ensures dependency flow points inward toward the Domain.
-
----
-
-## 🔄 Request Flow Walkthrough (A to Z)
-
-Here is a step-by-step trace of what happens when you call **`GET /api/Students`**:
-
-### 1. Middleware Layer (Pre-Processing)
-- **Request Arrives**: The HTTP request hits the `GlobalExceptionMiddleware`. It wraps the entire request in a `try-catch` block.
-- **Authentication**: The `JwtBearer` middleware extracts the token from the `Authorization` header. It validates the signature, issuer, and expiry.
-- **Authorization**: The `Authorization` middleware checks if the user has the required claims/roles to access the endpoint.
-
-### 2. API Layer (The Controller)
-- The request reaches `StudentsController.GetAll()`.
-- The Controller validates nothing but the presence of required parameters.
-- It calls `_studentService.GetAllStudentsAsync()`.
-
-### 3. Application Layer (The Service)
-- `StudentService` receives the request.
-- It interacts with the `IUnitOfWork` to request the database data.
-- **Business Logic**: This layer filters out "deleted" students and performs any ordering required.
-- **Mapping**: Data from the database (Entities) is mapped to `StudentResponse` (DTOs).
-- It returns a standardized `ApiResponse<T>` object.
-
-### 4. Persistence Layer (The Repository)
-- `StudentRepository` executes the `LINQ` query against the `StudentManagementDbContext`.
-- EF Core translates this to a SQL `SELECT` statement and executes it on **SQL Server**.
-
-### 5. Response Flow (Back to Client)
-- The Repository returns the data to the Service.
-- The Service returns the `ApiResponse` to the Controller.
-- The Controller returns `Ok(result)`, which converts the object to a **JSON** response.
-- **Middleware Exit**: The response flows back through the middlewares. If an error had occurred, the `GlobalExceptionMiddleware` would have intercepted it here and returned a `500 Server Error` JSON instead.
-
----
-
-## 🔐 Security Note
-- Users must **Register** with a `role` (Admin or User).
-- Only users with the **Admin** role can access the `DELETE` students endpoint.
-- Registration allows anyone to set their role for testing purposes (this is intended for development verification).
