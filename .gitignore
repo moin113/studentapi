@@ -16,3 +16,6 @@
 /StudentManagement.Domain/bin/Debug/net8.0
 /build_output.log
 /build_output_utf8.log
+/StudentManagement.Tests/bin/Debug/net9.0
+/StudentManagement.Tests/obj
+/StudentManagement.Tests/obj/Debug/net9.0/ref/StudentManagement.Tests.dll
