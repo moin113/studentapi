@@ -21,7 +21,7 @@ public class StudentService : IStudentService
 
     public async Task<ApiResponse<IEnumerable<StudentResponse>>> GetAllStudentsAsync()
     {
-        // Notice: Use GetAllAsync and filter rather than GetActiveStudentsAsync since interface might not have it yet
+        
         var allStudents = await _unitOfWork.Students.GetAllAsync();
         var students = allStudents.Where(s => !s.IsDeleted).ToList();
         var response = students.Select(s => MapToResponse(s));
@@ -67,7 +67,7 @@ public class StudentService : IStudentService
         if (student == null || student.IsDeleted)
             return ApiResponse<StudentResponse>.FailResult($"Student with ID {id} not found.");
 
-        // Check email conflict with another student
+        
         var emailCheck = await _unitOfWork.Students.GetByEmailAsync(request.Email);
         if (emailCheck != null && emailCheck.Id != id)
             return ApiResponse<StudentResponse>.FailResult("Another student with this email already exists.");
@@ -91,7 +91,6 @@ public class StudentService : IStudentService
         if (student == null || student.IsDeleted)
             return ApiResponse<bool>.FailResult($"Student with ID {id} not found.");
 
-        // Soft delete — never physically remove
         student.IsDeleted = true;
         student.UpdatedDate = DateTime.UtcNow;
 

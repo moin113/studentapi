@@ -25,8 +25,8 @@ namespace StudentManagement.Application.Mappings
 
         public static object ToEntity(this Student domain)
         {
-            // We use an anonymous object that acts as the entity for insertion
-            // Since we can't reference TblStudent explicitly without circular dependency
+            
+           
             return new
             {
                 Id = domain.Id,

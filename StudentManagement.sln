@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Persisten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Application", "StudentManagement.Application\StudentManagement.Application.csproj", "{140F8895-7AA9-4272-A942-68FC08E94BB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Tests", "StudentManagement.Tests\StudentManagement.Tests.csproj", "{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{140F8895-7AA9-4272-A942-68FC08E94BB7}.Release|x64.Build.0 = Release|Any CPU
 		{140F8895-7AA9-4272-A942-68FC08E94BB7}.Release|x86.ActiveCfg = Release|Any CPU
 		{140F8895-7AA9-4272-A942-68FC08E94BB7}.Release|x86.Build.0 = Release|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Debug|x64.Build.0 = Debug|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Debug|x86.Build.0 = Debug|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Release|x64.ActiveCfg = Release|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Release|x64.Build.0 = Release|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Release|x86.ActiveCfg = Release|Any CPU
+		{60FD5C28-BC0B-41D0-B168-99FD65D92F4D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

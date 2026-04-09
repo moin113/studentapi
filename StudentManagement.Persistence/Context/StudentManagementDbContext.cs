@@ -25,7 +25,7 @@ public partial class StudentManagementDbContext : DbContext
         {
             entity.ToTable("tblRefreshTokens");
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
-            // Ignore Domain-only properties not in DB
+            
             entity.Ignore(e => e.CreatedDate);
             entity.Ignore(e => e.IsDeleted);
 
@@ -49,7 +49,7 @@ public partial class StudentManagementDbContext : DbContext
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Role).HasDefaultValue("User");
-            // Ignore Domain-only properties not in DB
+            
             entity.Ignore(e => e.Username);
             entity.Ignore(e => e.IsDeleted);
         });

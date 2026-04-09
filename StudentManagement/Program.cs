@@ -61,6 +61,14 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowReact", policy => {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // ── 5. Dependency Injection ───────────────────────────────
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
@@ -123,6 +131,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowReact");
 app.UseAuthentication(); // before Authorization
 app.UseAuthorization();
 app.MapControllers();
