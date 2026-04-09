@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/StudentManagement/bin/Debug/net8.0
+/StudentManagement/obj
+/StudentManagement.Application/bin/Debug/net8.0
+/StudentManagement.Application/obj
+/StudentManagement.Domain/obj
+/StudentManagement.Infrastructure/obj
+/StudentManagement.Persistence/bin/Debug/net8.0
+/StudentManagement.Persistence/obj
+/StudentManagement.Infrastructure/bin/Debug/net8.0
+/StudentManagement/Logs
+/StudentManagement.Domain/bin/Debug/net8.0
+/build_output.log
+/build_output_utf8.log
