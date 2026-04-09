@@ -1,15 +1,11 @@
-﻿using StudentManagement.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StudentManagement.Application.Interface;
+using StudentManagement.Domain.Entities;
 
-namespace StudentManagement.Application.Interface
+namespace StudentManagement.Application.Interfaces.Repositories;
+
+public interface IStudentRepository : IGenericRepository<Student>
 {
-    public interface IStudentRepository : IGenericRepository<Student>
-    {
-        Task<Student?> GetByEmailAsync(string email);
-        Task<IEnumerable<Student>> GetByCourseAsync(string course);
-    }
+    Task<Student?> GetByEmailAsync(string email);
+    Task<IEnumerable<Student>> GetByCourseAsync(string course);
+    Task<IEnumerable<Student>> GetActiveStudentsAsync();
 }

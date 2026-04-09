@@ -21,7 +21,6 @@ public class StudentsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        throw new NotImplementedException();
         var result = await _studentService.GetAllStudentsAsync();
         return result.Success ? Ok(result) : BadRequest(result);
     }

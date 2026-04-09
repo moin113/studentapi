@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StudentManagement.Application.Interface;
+using StudentManagement.Application.Interfaces.Repositories;
 
 namespace StudentManagement.Application.Interface
 {
@@ -10,7 +7,6 @@ namespace StudentManagement.Application.Interface
     {
         IStudentRepository Students { get; }
         IUserRepository Users { get; }
-
         Task<int> SaveChangesAsync();
     }
 }

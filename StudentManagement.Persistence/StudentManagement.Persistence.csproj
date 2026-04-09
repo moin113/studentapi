@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudentManagement.Domain\StudentManagement.Domain.csproj" />
-    <ProjectReference Include="..\ClassLibrary1\StudentManagement.Application.csproj" />
+    <ProjectReference Include="..\StudentManagement.Application\StudentManagement.Application.csproj" />
   </ItemGroup>
 
 </Project>
