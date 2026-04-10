@@ -96,33 +96,7 @@ IF NOT EXISTS (
 BEGIN
     ALTER TABLE tblUsers
     ADD CONSTRAINT UQ_tblUsers_Email UNIQUE (Email);
-END
-GO
 
-
--- Fast lookup by IsDeleted (used in every Get query)
-CREATE INDEX IX_tblStudents_IsDeleted
-    ON tblStudents (IsDeleted ASC)
-    INCLUDE (Id, Name, Email, Age, Course, CreatedDate);
-GO
-
--- Fast pagination by CreatedDate DESC
-CREATE INDEX IX_tblStudents_CreatedDate
-    ON tblStudents (CreatedDate DESC)
-    WHERE IsDeleted = 0;
-GO
-
--- Fast refresh token lookup by UserId
-CREATE INDEX IX_tblRefreshTokens_UserId
-    ON tblRefreshTokens (UserId ASC)
-    INCLUDE (Token, ExpiresAt, IsRevoked);
-GO
-
--- Fast token validation lookup
-CREATE INDEX IX_tblRefreshTokens_Token
-    ON tblRefreshTokens (Token ASC)
-    INCLUDE (UserId, ExpiresAt, IsRevoked, RevokedAt);
-GO
 
 
 -- Password is: Admin@123  (BCrypt hashed)
@@ -144,6 +118,6 @@ GO
 
 -- Initial Admin User (Password: AdminPassword123 - Hashed version would vary, this is for demonstration)
 -- Note: Use the /api/Auth/register endpoint to create users with properly hashed passwords.
-INSERT INTO Users (FullName, Email, PasswordHash, Role) 
+INSERT INTO tblUsers (FullName, Email, PasswordHash, Role) 
 VALUES ('System Administrator', 'admin@test.com', 'AQAAAAIAAYagAAAAENnS5...', 'Admin');
 GO
