@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StudentManagement.Application.Interface;
 using StudentManagement.Application.Interfaces.Repositories;
 using StudentManagement.Domain.Entities;
@@ -8,23 +9,36 @@ namespace StudentManagement.Persistence.Repositories;
 
 public class UserRepository : GenericRepository<User>, IUserRepository
 {
-    public UserRepository(StudentManagementDbContext context) : base(context)
+    private readonly ILogger<UserRepository> _logger;
+
+    public UserRepository(StudentManagementDbContext context, ILogger<UserRepository> logger) : base(context)
     {
+        _logger = logger;
     }
 
     public async Task<User?> GetByEmailAsync(string email)
-        => await _dbSet.FirstOrDefaultAsync(u => u.Email == email && u.IsActive);
+    {
+        _logger.LogInformation("Repository: Finding user by email {Email}", email);
+        return await _dbSet.FirstOrDefaultAsync(u => u.Email == email && u.IsActive);
+    }
 
     public async Task AddRefreshTokenAsync(RefreshToken token)
-        => await _context.RefreshTokens.AddAsync(token);
+    {
+        _logger.LogInformation("Repository: Adding new refresh token for UserId {UserId}", token.UserId);
+        await _context.RefreshTokens.AddAsync(token);
+    }
 
     public async Task<IEnumerable<RefreshToken>> FindRefreshTokenAsync(string token)
-        => await _context.RefreshTokens
+    {
+        _logger.LogInformation("Repository: Searching for refresh token.");
+        return await _context.RefreshTokens
             .Where(t => t.Token == token)
             .ToListAsync();
+    }
 
     public async Task RevokeAllUserTokensAsync(int userId)
     {
+        _logger.LogInformation("Repository: Revoking all tokens for UserId {UserId}", userId);
         var tokens = await _context.RefreshTokens
             .Where(t => t.UserId == userId && !t.IsRevoked)
             .ToListAsync();

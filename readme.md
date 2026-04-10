@@ -13,19 +13,32 @@ A professional, production-ready ASP.NET Core Web API built with **Clean Archite
 
 ### 1. Database Configuration
 Open `StudentManagement/appsettings.json` and update the `DefaultConnection` string if your local SQL server instance uses a different name:
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=StudentManagementDB;Trusted_Connection=True;TrustServerCertificate=True;"
-}
-```
+### Setup and Configuration
 
-### 2. Apply Migrations (if using EF Migrations) or Database Schema
-If the database doesn't exist, ensure you run the `Update-Database` command in the Package Manager Console (targeting the Persistence project) or manually execute the schema scripts.
+1. **Database Setup**:
+   You have two options for setting up the database:
+   
+   **Option A: SQL Script (Recommended)**
+   - Open SQL Server Management Studio (SSMS) or your preferred SQL tool.
+   - Execute the `StudentManagement.sql` file provided in the root directory. This will create the `StudentManagementDb` and all necessary tables.
+   
+   **Option B: Entity Framework Migrations**
+   - Open a terminal in the `StudentManagement` project folder.
+   - Run: `dotnet ef database update --project ..\StudentManagement.Persistence\`
 
-### 3. Run the Project
-1. Set `StudentManagement` as the StartUp project.
-2. Press `F5` or run `dotnet run` in the terminal.
-3. Swagger will automatically open at `https://localhost:7107/swagger`.
+2. **Configuration**:
+   - Open `StudentManagement/appsettings.json`.
+   - Ensure the `ConnectionStrings.DefaultConnection` points to your SQL Server instance (e.g., `Server=localhost;Database=StudentManagementDb;Trusted_Connection=True;TrustServerCertificate=True;`).
+
+3. **Running the API**:
+   - Run: `dotnet run --project StudentManagement`
+   - The API will be available at `http://localhost:5000` or `https://localhost:5001`.
+   - Explore the API via Swagger at `http://localhost:5000/swagger`.
+
+### API Documentation
+The API is fully documented using Swagger XML comments. Each endpoint includes a description and expected response types.
+- **Unwrapped Responses**: Successful responses now return the data object directly, while errors still return the structured `ApiResponse` wrapper.
+- **Logging**: Detailed logging is implemented across all layers (Controllers, Services, Repositories).
 
 ---
 

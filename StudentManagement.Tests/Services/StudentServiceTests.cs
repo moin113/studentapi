@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Microsoft.Extensions.Logging;
 using StudentManagement.Application.DTOs.Response;
 using StudentManagement.Application.Interface;
 using StudentManagement.Application.Interfaces.Repositories;
@@ -16,16 +17,18 @@ public class StudentServiceTests
 {
     private readonly Mock<IUnitOfWork> _mockUnitOfWork;
     private readonly Mock<IStudentRepository> _mockStudentRepo;
+    private readonly Mock<ILogger<StudentService>> _mockLogger;
     private readonly StudentService _sut; 
 
     public StudentServiceTests()
     {
         _mockUnitOfWork = new Mock<IUnitOfWork>();
         _mockStudentRepo = new Mock<IStudentRepository>();
+        _mockLogger = new Mock<ILogger<StudentService>>();
 
         _mockUnitOfWork.Setup(u => u.Students).Returns(_mockStudentRepo.Object);
 
-        _sut = new StudentService(_mockUnitOfWork.Object);
+        _sut = new StudentService(_mockUnitOfWork.Object, _mockLogger.Object);
     }
 
     [Fact]

@@ -30,7 +30,7 @@ public class GlobalExceptionMiddleware
         catch (Exception exception)
         {
             _logger.LogError(
-                exception, "Exception occurred: {Message}", exception.Message);
+                exception, "Exception occurred: {Message}, Stack Trace: {StackTrace}", exception.Message, exception.StackTrace);
 
             var problemDetails = new ProblemDetails
             {

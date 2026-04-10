@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Microsoft.Extensions.Logging;
 using StudentManagement.Application.DTOs.Request;
 using StudentManagement.Application.Interface;
 using StudentManagement.Application.Interfaces.Services;
@@ -19,6 +20,7 @@ public class AuthServiceTests
     private readonly Mock<IUnitOfWork> _mockUnitOfWork;
     private readonly Mock<IUserRepository> _mockUserRepo;
     private readonly Mock<IJwtTokenGenerator> _mockJwtGenerator;
+    private readonly Mock<ILogger<AuthService>> _mockLogger;
     private readonly AuthService _sut;
 
     public AuthServiceTests()
@@ -26,9 +28,10 @@ public class AuthServiceTests
         _mockUnitOfWork = new Mock<IUnitOfWork>();
         _mockUserRepo = new Mock<IUserRepository>();
         _mockJwtGenerator = new Mock<IJwtTokenGenerator>();
+        _mockLogger = new Mock<ILogger<AuthService>>();
 
         _mockUnitOfWork.Setup(u => u.Users).Returns(_mockUserRepo.Object);
-        _sut = new AuthService(_mockUnitOfWork.Object, _mockJwtGenerator.Object);
+        _sut = new AuthService(_mockUnitOfWork.Object, _mockJwtGenerator.Object, _mockLogger.Object);
     }
 
     [Fact]
