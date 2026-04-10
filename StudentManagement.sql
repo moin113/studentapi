@@ -1,6 +1,7 @@
 -- ============================================
 -- Student Management System — Database Setup
 -- Run this once on any machine to set up DB
+-- Default Admin: admin@test.com / AdminPassword123
 -- ============================================
 
 USE master;
@@ -139,7 +140,8 @@ GO
 
 -- =============================================
 -- Seed Admin User
--- Password: AdminPassword123 (BCrypt hash)
+-- Email:    admin@test.com
+-- Password: AdminPassword123
 -- =============================================
 IF NOT EXISTS (SELECT 1 FROM tblUsers WHERE Email = 'admin@test.com')
 BEGIN
@@ -147,7 +149,7 @@ BEGIN
     VALUES (
         'System Administrator',
         'admin@test.com',
-        'PASTE_YOUR_GENERATED_HASH_HERE',
+        '$2a$11$XyjiiNdDmIsBFh/1vJB2U.EjvqSe7n8Twjnq77PHta5s7Jkrb6IqK',
         'Admin',
         GETUTCDATE(),
         1
@@ -168,4 +170,6 @@ FROM sys.indexes i
 JOIN sys.tables t ON i.object_id = t.object_id
 WHERE i.name IS NOT NULL
 ORDER BY t.name, i.name;
+
+SELECT Id, FullName, Email, Role, IsActive FROM tblUsers;
 GO
