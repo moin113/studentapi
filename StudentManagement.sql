@@ -139,15 +139,15 @@ GO
 
 -- =============================================
 -- Seed Admin User
--- Password: Admin@123 (valid BCrypt $2a$ hash)
+-- Password: AdminPassword123 (BCrypt hash)
 -- =============================================
-IF NOT EXISTS (SELECT 1 FROM tblUsers WHERE Email = 'admin@studentmgmt.com')
+IF NOT EXISTS (SELECT 1 FROM tblUsers WHERE Email = 'admin@test.com')
 BEGIN
     INSERT INTO tblUsers (FullName, Email, PasswordHash, Role, CreatedDate, IsActive)
     VALUES (
-        'System Admin',
-        'admin@studentmgmt.com',
-        '$2a$11$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+        'System Administrator',
+        'admin@test.com',
+        'PASTE_YOUR_GENERATED_HASH_HERE',
         'Admin',
         GETUTCDATE(),
         1
