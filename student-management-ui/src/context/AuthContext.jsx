@@ -8,24 +8,26 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      // Decode user from token if needed, or set a basic user state
-      setUser({ token });
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
     setLoading(false);
   }, []);
 
   const login = async (email, password) => {
     const response = await api.post('/Auth/login', { email, password });
-    const { accessToken, fullName, role } = response.data.data;
+    const { accessToken, fullName, role } = response.data;
+    const userData = { fullName, role, token: accessToken };
     localStorage.setItem('accessToken', accessToken);
-    setUser({ fullName, role, token: accessToken });
+    localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
     return response.data;
   };
 
   const logout = () => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
     setUser(null);
   };
 
